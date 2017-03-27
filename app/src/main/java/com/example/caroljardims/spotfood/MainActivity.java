@@ -39,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         this.fbInitConfig();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
-        return true;
-    }
-
     protected void fbInitConfig() {
 
         final Intent maps = new Intent(this, MapsActivity.class);

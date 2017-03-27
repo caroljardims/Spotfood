@@ -1,7 +1,6 @@
 package com.example.caroljardims.spotfood;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -42,7 +41,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.maps_menu,menu);
         return true;
     }
 
