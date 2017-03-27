@@ -1,29 +1,18 @@
 package com.example.caroljardims.spotfood;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,22 +27,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Intent maps = new Intent(this, MapsActivity.class);
+
+        Profile profile = Profile.getCurrentProfile();
+        if (profile != null) {
+            startActivity(maps);
+        }
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         this.fbInitConfig();
     }
 
-    protected void fbInitConfig() {
-        final ProfilePictureView profilePicture = (ProfilePictureView) findViewById(R.id.profile_picture);
-        final TextView name = (TextView) findViewById(R.id.name);
-        final Intent maps = new Intent(this, MapsActivity.class);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
-        Profile profile = Profile.getCurrentProfile();
-        if (profile != null) {
-            name.setText(profile.getFirstName());
-            profilePicture.setProfileId(profile.getId());
-        }
+    protected void fbInitConfig() {
+
+        final Intent maps = new Intent(this, MapsActivity.class);
 
         callbackManager = CallbackManager.Factory.create();
         final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -61,12 +55,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult)  {
-                Profile profile = Profile.getCurrentProfile();
-                if (profile != null) {
-                    name.setText(profile.getFirstName());
-                    profilePicture.setProfileId(profile.getId());
-                }
-
                 startActivity(maps);
             }
 
