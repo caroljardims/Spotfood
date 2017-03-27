@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void fbInitConfig() {
         final ProfilePictureView profilePicture = (ProfilePictureView) findViewById(R.id.profile_picture);
         final TextView name = (TextView) findViewById(R.id.name);
+        final Intent maps = new Intent(this, MapsActivity.class);
 
         Profile profile = Profile.getCurrentProfile();
         if (profile != null) {
@@ -59,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setReadPermissions("email");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(LoginResult loginResult)  {
                 Profile profile = Profile.getCurrentProfile();
                 if (profile != null) {
                     name.setText(profile.getFirstName());
                     profilePicture.setProfileId(profile.getId());
                 }
+
+                startActivity(maps);
             }
 
             @Override
