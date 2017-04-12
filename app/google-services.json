@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "200802587292",
+    "firebase_url": "https://spotfood-bce1e.firebaseio.com",
+    "project_id": "spotfood-bce1e",
+    "storage_bucket": "spotfood-bce1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200802587292:android:8e6ad7b5ac3d12fb",
+        "android_client_info": {
+          "package_name": "com.example.caroljardims.spotfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200802587292-qcrrbhr3ppnfcvfeh1abn7ilnt14e28o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caroljardims.spotfood",
+            "certificate_hash": "5d585c8f8445fc12f81f015e4e7be640e7aa90c8"
+          }
+        },
+        {
+          "client_id": "200802587292-jkrvg69m75p81gmv5j2ju0r4tq6d90em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpS0t2coC64Xa_qDQTRl57avIOcHw_gDs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200802587292-jkrvg69m75p81gmv5j2ju0r4tq6d90em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
