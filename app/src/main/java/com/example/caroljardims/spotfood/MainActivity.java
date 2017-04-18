@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -29,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private Intent maps;
+    private Intent getPermitions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        maps = new Intent(this, MapsActivity.class);
+        getPermitions = new Intent(this, GetPermissions.class);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         Profile profile = Profile.getCurrentProfile();
         if (profile != null) {
-            startActivity(maps);
+            startActivity(getPermitions);
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -65,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void fbInitConfig() {
 
-        final Intent maps = new Intent(this, MapsActivity.class);
-
         callbackManager = CallbackManager.Factory.create();
         final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email", "public_profile");
@@ -74,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult)  {
                 handleFacebookAccessToken(loginResult.getAccessToken());
-//                startActivity(maps);
+
             }
 
             @Override
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        startActivity(maps);
+                        startActivity(getPermitions);
 
                         // ...
                     }
