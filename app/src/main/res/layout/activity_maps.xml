@@ -17,6 +17,8 @@
             android:layout_weight="0"
             android:layout_height="match_parent"
             android:text="333"
+            android:id="@+id/testButton"
+            android:onClick="sendData"
             android:textColor="@color/strongOrange"
             android:background="@color/white"/>
         <Button
@@ -31,6 +33,8 @@
             android:layout_weight="0"
             android:layout_height="match_parent"
             android:text="222"
+            android:id="@+id/testButton2"
+            android:onClick="getData"
             android:textColor="@color/strongOrange"
             android:background="@color/white"/>
 
