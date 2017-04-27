@@ -3,10 +3,12 @@ package com.example.caroljardims.spotfood;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -14,10 +16,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.Profile;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,8 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -44,18 +49,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-//        for (SpotfoodLocation s : local) {
-//            sendToast(s.getName());
-//            mMap.addMarker(new MarkerOptions()
-//                    .position(new LatLng(Double.parseDouble(s.getLat()), Double.parseDouble(s.getLon())))
-//                    .title(s.getName()));
-//        }
-
-//        Profile profile = Profile.getCurrentProfile();
-//        if (profile != null) {
-//            String text = "Welcome, " + profile.getFirstName() + "!";
-//            LoginManager.getInstance().logOut();
-//        }
+        if(!isOnline()){
+            sendToast("Não encontramos conexão com a Internet.");
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +63,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerDragListener(this);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -80,16 +77,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
 
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(-29.688011, -53.822259))
-                .title("Hello world"));
-
         updateLocations();
     }
 
-    public void updateLocations(){
-        DatabaseReference ref = database.getReference("Locations");
-        ref.child("local").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void updateLocations() {
+        DatabaseReference ref = database.getReference("Locations").child("local");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postData : dataSnapshot.getChildren()) {
@@ -97,7 +90,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     local.add(location);
                     mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(location.getLat()), Double.parseDouble(location.getLon())))
-                            .title(location.getName()));
+                            .title(location.getName())
+                            .draggable(true));
                 }
             }
 
@@ -138,6 +132,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
 
     void sendToast(String message){
         Context c = getApplicationContext();
@@ -146,4 +147,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         toast.show();
     }
 
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(final Marker marker) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+        final DatabaseReference ref = database.getReference("Locations").child("local");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postData : dataSnapshot.getChildren()) {
+                    SpotfoodLocation location = postData.getValue(SpotfoodLocation.class);
+                    if(location.getName().equals(marker.getTitle())){
+                        location.setLat(String.valueOf(marker.getPosition().latitude));
+                        location.setLon(String.valueOf(marker.getPosition().longitude));
+                        String key = postData.getKey();
+                        ref.child(key).setValue(location);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
