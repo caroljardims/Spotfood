@@ -9,24 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_gravity="center"
         android:background="@color/white">
 
         <Button
             android:layout_width="100dp"
             android:layout_weight="0"
             android:layout_height="match_parent"
-            android:text="333"
-            android:id="@+id/testButton"
-            android:onClick="sendData"
-            android:textColor="@color/strongOrange"
+            android:text="atualizar mapa"
+            android:textAllCaps="false"
+            android:id="@+id/update_map"
+            android:onClick="updateMap"
             android:background="@color/white"/>
         <Button
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Check In"
-            android:textColor="@color/strongOrange"
+            android:text="add novo"
+            android:onClick="addNew"
+            android:textAllCaps="false"
             android:background="@color/white"/>
         <Button
             android:layout_width="100dp"
@@ -35,7 +35,6 @@
             android:text="222"
             android:id="@+id/testButton2"
             android:onClick="getData"
-            android:textColor="@color/strongOrange"
             android:background="@color/white"/>
 
     </LinearLayout>

@@ -2,20 +2,20 @@ package com.example.caroljardims.spotfood;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.facebook.Profile;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
@@ -102,13 +102,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    public void sendData(View v) {
-        Button testButton = (Button) findViewById(R.id.testButton);
-        if(v.getId() == R.id.testButton) {
-            DatabaseReference ref = database.getReference("test");
-            ref.setValue("works <3");
-            testButton.setText("works");
-        }
+    public void updateMap(View v) {
+//        Button updateMapButton = (Button) findViewById(R.id.update_map);
+//        if(v.getId() == R.id.update_map) { }
+        Intent maps = new Intent(this, MapsActivity.class);
+        startActivity(maps);
+    }
+
+    public void addNew(View v){
+        Intent addNew = new Intent(this, NewPlace.class);
+        Double lat = mMap.getMyLocation().getLatitude();
+        Double lon = mMap.getMyLocation().getLongitude();
+        addNew.putExtra("latitude", String.valueOf(lat));
+        addNew.putExtra("longitude", String.valueOf(lon));
+        startActivity(addNew);
     }
 
     public void getData(View v) {
