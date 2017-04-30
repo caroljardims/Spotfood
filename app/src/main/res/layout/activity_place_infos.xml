@@ -13,17 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerInside"
+        android:contentDescription="Image Info"
         app:srcCompat="@drawable/foodtruck"
         android:background="@color/gray900"/>
+
+
     <Button
         android:id="@+id/checkInButton"
         android:layout_width="80dp"
         android:layout_height="60dp"
-        android:layout_marginTop="-30dp"
-        android:onClick="checkIn"
         android:layout_gravity="center"
+        android:onClick="checkIn"
         android:text="check-in"
-        android:textAllCaps="false"/>
+        android:layout_marginTop="-30dp"
+        android:textAllCaps="false" />
+
+    <ImageButton
+        android:id="@+id/getImageLogo"
+        android:layout_marginTop="-50dp"
+        android:layout_marginRight="10dp"
+        android:onClick="fileSelector"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:scaleType="centerCrop"
+        android:src="@drawable/camera" />
+
 
     <TextView
         android:layout_width="wrap_content"

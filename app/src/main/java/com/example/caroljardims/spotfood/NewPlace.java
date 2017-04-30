@@ -44,26 +44,30 @@ public class NewPlace extends AppCompatActivity {
 
         String key = UUID.randomUUID().toString();
 
-        place.setName(name.getText().toString());
-        place.setLat(lat);
-        place.setLon(lon);
-        place.setLogo(" - ");
-        if(status.isChecked()){
-            place.setStatus(1);
+        if(name.getText().toString().isEmpty()){
+            sendToast("Ops, faltou o nome!");
         } else {
-            place.setStatus(0);
-        }
-        place.setType(type.getText().toString());
-        place.setId(key);
+            place.setName(name.getText().toString());
+            place.setLat(lat);
+            place.setLon(lon);
+            place.setLogo(" - ");
+            if(status.isChecked()){
+                place.setStatus(1);
+            } else {
+                place.setStatus(0);
+            }
+            place.setType(type.getText().toString());
+            place.setId(key);
 
-        ref.child(key).setValue(place);
-        startActivity(maps);
+            ref.child(key).setValue(place);
+            startActivity(maps);
+        }
     }
 
-//    void sendToast(String message){
-//        Context c = getApplicationContext();
-//        int duration = Toast.LENGTH_LONG;
-//        Toast toast = Toast.makeText(c, message, duration);
-//        toast.show();
-//    }
+    void sendToast(String message){
+        Context c = getApplicationContext();
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(c, message, duration);
+        toast.show();
+    }
 }
