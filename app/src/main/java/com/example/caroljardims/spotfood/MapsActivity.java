@@ -36,8 +36,9 @@ import java.util.List;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    List<SpotfoodLocation> local = new ArrayList();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private ArrayList local = new ArrayList();
+    private Intent placeInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        placeInfos = new Intent(this, PlaceInfos.class);
 
         if(!isOnline()){
             sendToast("Não encontramos conexão com a Internet.");
@@ -78,20 +81,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         updateLocations();
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                SpotfoodLocation infos = (SpotfoodLocation) marker.getTag();
+                placeInfos.putExtra("place_id", infos.getId());
+                placeInfos.putExtra("place_name", infos.getName());
+                startActivity(placeInfos);
+            }
+        });
     }
 
     public void updateLocations() {
-        DatabaseReference ref = database.getReference("Locations").child("local");
+        final DatabaseReference ref = database.getReference("Locations").child("local");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postData : dataSnapshot.getChildren()) {
                     SpotfoodLocation location = postData.getValue(SpotfoodLocation.class);
                     local.add(location);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(location.getLat()), Double.parseDouble(location.getLon())))
-                            .title(location.getName())
-                            .draggable(true));
+                    LatLng position = new LatLng(Double.parseDouble(location.getLat()), Double.parseDouble(location.getLon()));
+                    Marker place = mMap.addMarker(new MarkerOptions().position(position).title(location.getName()).draggable(true));
+                    place.setTag(location);
                 }
             }
 
@@ -166,6 +178,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMarkerDragEnd(final Marker marker) {
+
         mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         final DatabaseReference ref = database.getReference("Locations").child("local");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,11 +186,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postData : dataSnapshot.getChildren()) {
                     SpotfoodLocation location = postData.getValue(SpotfoodLocation.class);
-                    if(location.getName().equals(marker.getTitle())){
+                    SpotfoodLocation restoreData = (SpotfoodLocation)marker.getTag();
+                    if(location.getId().equals((restoreData.getId()))){
                         location.setLat(String.valueOf(marker.getPosition().latitude));
                         location.setLon(String.valueOf(marker.getPosition().longitude));
                         String key = postData.getKey();
                         ref.child(key).setValue(location);
+                        break;
                     }
                 }
             }

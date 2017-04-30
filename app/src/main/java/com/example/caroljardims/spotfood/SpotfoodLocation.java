@@ -3,90 +3,93 @@ package com.example.caroljardims.spotfood;
 
 
 public class SpotfoodLocation {
-    String id;
-    String name;
-    String lat;
-    String lon;
-    String logo;
-    String rate;
-    Integer status;
-    String type;
+    private String id;
+    private String name;
+    private String lat;
+    private String lon;
+    private String logo;
+    private String rate;
+    private Integer status;
+    private String type;
+    private int visitors;
 
-    SpotfoodLocation(){}
+    SpotfoodLocation() {
+    }
 
-    SpotfoodLocation(String id, String name, String lat, String lon, String logo, String rate, Integer status, String type){
+    SpotfoodLocation(String id, String name, String lat, String lon, String logo, String rate, Integer status, String type, int visitors) {
         this.id = id;
         this.name = name;
         this.lat = lat;
         this.lon = lon;
         this.logo = logo;
         this.rate = rate;
+        this.visitors = visitors;
         this.status = status;
-        this.type = type;
         this.type = type;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getId(){
+    public String getId() {
         return this.id;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public void setLat(String lat){
+    public void setLat(String lat) {
         this.lat = lat;
     }
 
-    public String getLat(){
+    public String getLat() {
         return this.lat;
     }
 
-    public void setLon(String lon){
+    public void setLon(String lon) {
         this.lon = lon;
     }
 
-    public String getLon(){
+    public String getLon() {
         return this.lon;
     }
 
-    public void setLogo(String logo){
+    public void setLogo(String logo) {
         this.logo = logo;
     }
 
-    public String getLogo(){
+    public String getLogo() {
         return this.logo;
     }
 
-    public void setRate(String rate){
-        this.rate = rate;
-    }
+    public void setRate(String rate) { this.rate = rate; }
 
-    public String getRate(){
-        return this.rate;
-    }
+    public String getRate() { return this.rate; }
 
-    public void setStatus(Integer status){
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Integer getStatus(){
+    public Integer getStatus() {
         return this.status;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
+
+    public void setVisitors() { this.visitors += 1; }
+
+    public int getVisitors() { return this.visitors; }
+
 }

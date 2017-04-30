@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.caroljardims.spotfood.PlaceInfos"
+    android:orientation="vertical"
+    android:background="@color/gray50">
+
+    <ImageView
+        android:id="@+id/imageInfo"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/foodtruck"
+        android:background="@color/gray900"/>
+    <Button
+        android:id="@+id/checkInButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="-30dp"
+        android:onClick="checkIn"
+        android:layout_gravity="center"
+        android:text="check-in"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="20sp"
+        android:id="@+id/nameInfo"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="7dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:id="@+id/rateStar1"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/golden_star" />
+        <ImageView
+            android:id="@+id/rateStar2"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="3dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/golden_star" />
+        <ImageView
+            android:id="@+id/rateStar3"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="3dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/golden_star" />
+        <ImageView
+            android:id="@+id/rateStar4"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="3dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/silver_star" />
+        <ImageView
+            android:id="@+id/rateStar5"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="3dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/silver_star" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_marginLeft="3dp"
+            android:textSize="12sp"
+            android:id="@+id/rateInfo"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/typeInfo"
+        android:paddingLeft="15dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/statusInfo"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0"/>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/statusInfoSwitch"/>
+    </LinearLayout>
+
+</LinearLayout>
