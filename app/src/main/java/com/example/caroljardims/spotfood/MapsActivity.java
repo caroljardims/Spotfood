@@ -130,25 +130,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(addNew);
     }
 
-    public void getData(View v) {
-        final Button testButton = (Button) findViewById(R.id.testButton2);
-        if(v.getId() == R.id.testButton2) {
-            DatabaseReference ref = database.getReference("test");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    String value = dataSnapshot.getValue(String.class);
-                    testButton.setText(value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                }
-            });
-        }
+    public void seeProfile(View v) {
+        Intent seeMyProfile = new Intent(this, UserProfile.class);
+        startActivity(seeMyProfile);
     }
 
     public boolean isOnline() {

@@ -13,8 +13,7 @@ public class SpotfoodLocation {
     private String type;
     private int visitors;
 
-    SpotfoodLocation() {
-    }
+    SpotfoodLocation() {}
 
     SpotfoodLocation(String id, String name, String lat, String lon, String logo, String rate, Integer status, String type, int visitors) {
         this.id = id;

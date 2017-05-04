@@ -32,9 +32,10 @@
             android:layout_width="100dp"
             android:layout_weight="0"
             android:layout_height="match_parent"
-            android:text="222"
-            android:id="@+id/testButton2"
-            android:onClick="getData"
+            android:text="meu perfil"
+            android:textAllCaps="false"
+            android:id="@+id/myProfile"
+            android:onClick="seeProfile"
             android:background="@color/white"/>
 
     </LinearLayout>
