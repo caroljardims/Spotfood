@@ -50,7 +50,7 @@ public class NewPlace extends AppCompatActivity {
             place.setName(name.getText().toString());
             place.setLat(lat);
             place.setLon(lon);
-            place.setLogo(" - ");
+            place.setLogo("");
             if(status.isChecked()){
                 place.setStatus(1);
             } else {
