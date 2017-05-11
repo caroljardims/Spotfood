@@ -1,15 +1,19 @@
 package com.example.caroljardims.spotfood;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -49,6 +53,7 @@ public class PlaceInfos extends AppCompatActivity {
     private Profile profile = Profile.getCurrentProfile();
     private ArrayList<Photos> photos = new ArrayList<>();
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +100,15 @@ public class PlaceInfos extends AppCompatActivity {
         ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
         nameInfo.setText(data.getName());
         typeInfo.setText(data.getType());
-        rateInfo.setText(data.getRate());
+        if(data.getRate() != null){
+            Double rateData = Double.valueOf(data.getRate());
+            rateInfo.setText(String.format("%.2f", rateData));
+            setStars(rateData);
+        }
+        else {
+            rateInfo.setText(name + " ainda não recebeu nenhuma avaliação :(");
+            setEmptyStars();
+        }
         int status = data.getStatus();
         if(status==1){
             statusSwitch.setChecked(true);
@@ -143,6 +156,7 @@ public class PlaceInfos extends AppCompatActivity {
     public void checkIn(View v){
         Button checkInButton = (Button) findViewById(R.id.checkInButton);
         ImageButton cameraButton = (ImageButton) findViewById(R.id.getImageLogo);
+        Button rateButton = (Button) findViewById(R.id.rateButton);
 //        checkInButton.setTextColor(Color.WHITE);
         if(infos.getStatus() == 1) {
             String smile = "\ud83d\ude03";
@@ -155,16 +169,22 @@ public class PlaceInfos extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 refUser.child(profile.getId())
                         .child("checkedIn")
-                        .child(c.getTime().toString())
+                        .child(String.valueOf(c.getTimeInMillis()))
                         .child("id")
                         .setValue(infos.getId());
                 refUser.child(profile.getId())
                         .child("checkedIn")
-                        .child(c.getTime().toString())
+                        .child(String.valueOf(c.getTimeInMillis()))
+                        .child("data")
+                        .setValue(c.getTime().toString());
+                refUser.child(profile.getId())
+                        .child("checkedIn")
+                        .child(String.valueOf(c.getTimeInMillis()))
                         .child("name")
                         .setValue(infos.getName());
             }
             cameraButton.setVisibility(1);
+            rateButton.setVisibility(1);
         } else {
             String cry = "\uD83D\uDE12";
             checkInButton.setText(cry);
@@ -245,5 +265,94 @@ public class PlaceInfos extends AppCompatActivity {
             photoIndex = 0;
         }
         Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
+    }
+
+    public void ratePlaceAction(View view) {
+        DialogFragment rf = new Rate();
+        Bundle arg = new Bundle();
+        arg.putString("id",id);
+        rf.setArguments(arg);
+        rf.show(getFragmentManager(),"dialog");
+    }
+
+    public void trashThis(View view) {
+        final Intent maps = new Intent(this, MapsActivity.class);
+        AlertDialog alertDialog = new AlertDialog.Builder(PlaceInfos.this).create();
+        alertDialog.setTitle("Cuidado!");
+        alertDialog.setMessage("Tem certeza que deseja excluir " + name + "?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "sim.",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        refDB.child(id).removeValue();
+                        startActivity(maps);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "não!!!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void setStars(Double nStars){
+        ImageView rateStar1 = (ImageView) findViewById(R.id.rateStar1);
+        ImageView rateStar2 = (ImageView) findViewById(R.id.rateStar2);
+        ImageView rateStar3 = (ImageView) findViewById(R.id.rateStar3);
+        ImageView rateStar4 = (ImageView) findViewById(R.id.rateStar4);
+        ImageView rateStar5 = (ImageView) findViewById(R.id.rateStar5);
+
+        if(nStars < 1) {
+            rateStar1.setImageResource(R.drawable.empty_star);
+            rateStar2.setImageResource(R.drawable.empty_star);
+            rateStar3.setImageResource(R.drawable.empty_star);
+            rateStar4.setImageResource(R.drawable.empty_star);
+            rateStar5.setImageResource(R.drawable.empty_star);
+        } else if(nStars < 1.75){
+            rateStar1.setImageResource(R.drawable.golden_star);
+            rateStar2.setImageResource(R.drawable.silver_star);
+            rateStar3.setImageResource(R.drawable.silver_star);
+            rateStar4.setImageResource(R.drawable.silver_star);
+            rateStar5.setImageResource(R.drawable.silver_star);
+        } else if(nStars < 2.75){
+            rateStar1.setImageResource(R.drawable.golden_star);
+            rateStar2.setImageResource(R.drawable.golden_star);
+            rateStar3.setImageResource(R.drawable.silver_star);
+            rateStar4.setImageResource(R.drawable.silver_star);
+            rateStar5.setImageResource(R.drawable.silver_star);
+        } else if(nStars < 3.75){
+            rateStar1.setImageResource(R.drawable.golden_star);
+            rateStar2.setImageResource(R.drawable.golden_star);
+            rateStar3.setImageResource(R.drawable.golden_star);
+            rateStar4.setImageResource(R.drawable.silver_star);
+            rateStar5.setImageResource(R.drawable.silver_star);
+        } else if (nStars < 4.75){
+            rateStar1.setImageResource(R.drawable.golden_star);
+            rateStar2.setImageResource(R.drawable.golden_star);
+            rateStar3.setImageResource(R.drawable.golden_star);
+            rateStar4.setImageResource(R.drawable.golden_star);
+            rateStar5.setImageResource(R.drawable.silver_star);
+        } else {
+            rateStar1.setImageResource(R.drawable.golden_star);
+            rateStar2.setImageResource(R.drawable.golden_star);
+            rateStar3.setImageResource(R.drawable.golden_star);
+            rateStar4.setImageResource(R.drawable.golden_star);
+            rateStar5.setImageResource(R.drawable.golden_star);
+        }
+    }
+
+    private void setEmptyStars(){
+        ImageView rateStar1 = (ImageView) findViewById(R.id.rateStar1);
+        ImageView rateStar2 = (ImageView) findViewById(R.id.rateStar2);
+        ImageView rateStar3 = (ImageView) findViewById(R.id.rateStar3);
+        ImageView rateStar4 = (ImageView) findViewById(R.id.rateStar4);
+        ImageView rateStar5 = (ImageView) findViewById(R.id.rateStar5);
+
+        rateStar1.setImageResource(R.drawable.empty_star);
+        rateStar2.setImageResource(R.drawable.empty_star);
+        rateStar3.setImageResource(R.drawable.empty_star);
+        rateStar4.setImageResource(R.drawable.empty_star);
+        rateStar5.setImageResource(R.drawable.empty_star);
     }
 }

@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerInside"
-            android:contentDescription="Image Info"
             app:srcCompat="@drawable/foodtruck"
             android:background="@color/gray900"/>
 
@@ -58,57 +57,60 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="7dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="20dp">
-
-            <ImageView
-                android:id="@+id/rateStar1"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/golden_star" />
-            <ImageView
-                android:id="@+id/rateStar2"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="3dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/golden_star" />
-            <ImageView
-                android:id="@+id/rateStar3"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="3dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/golden_star" />
-            <ImageView
-                android:id="@+id/rateStar4"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="3dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/silver_star" />
-            <ImageView
-                android:id="@+id/rateStar5"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="3dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/silver_star" />
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:layout_marginLeft="3dp"
-                android:textSize="12sp"
-                android:id="@+id/rateInfo"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp">
 
-        <TextView
+                <ImageView
+                    android:id="@+id/rateStar1"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:id="@+id/rateStar2"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:id="@+id/rateStar3"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:id="@+id/rateStar4"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:id="@+id/rateStar5"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="3dp"
+                    android:scaleType="centerCrop" />
+                <TextView
+                    android:id="@+id/rateInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Avaliar"
+                android:id="@+id/rateButton"
+                android:onClick="ratePlaceAction"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+            <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/foodtruck"
+                android:background="@color/gray400"
                 />
             <ImageButton
                 android:id="@+id/nextPhoto"
@@ -169,6 +171,14 @@
                 <!--android:verticalSpacing="5dp">-->
 
             <!--</GridView>-->
+            <ImageButton
+                android:layout_marginTop="40dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:onClick="trashThis"
+                android:src="@drawable/background"/>
     </LinearLayout>
     </ScrollView>
 

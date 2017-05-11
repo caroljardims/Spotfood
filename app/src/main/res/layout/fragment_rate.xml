@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.caroljardims.spotfood.Rate">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dê sua nota!"
+            android:layout_gravity="center"
+            android:textSize="16dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
+
+            <ImageButton
+                android:id="@+id/star1"
+                android:padding="1dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/empty_star"
+                android:scaleType="centerCrop"
+                android:background="?android:attr/selectableItemBackground"/>
+            <ImageButton
+                android:id="@+id/star2"
+                android:padding="1dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/empty_star"
+                android:scaleType="centerCrop"
+                android:background="?android:attr/selectableItemBackground"/>
+            <ImageButton
+                android:id="@+id/star3"
+                android:padding="1dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/empty_star"
+                android:scaleType="centerCrop"
+                android:background="?android:attr/selectableItemBackground"/>
+            <ImageButton
+                android:id="@+id/star4"
+                android:padding="1dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/empty_star"
+                android:scaleType="centerCrop"
+                android:background="?android:attr/selectableItemBackground"/>
+            <ImageButton
+                android:id="@+id/star5"
+                android:padding="1dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/empty_star"
+                android:scaleType="centerCrop"
+                android:background="?android:attr/selectableItemBackground"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sendRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enviar"
+            android:textAllCaps="false"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</FrameLayout>

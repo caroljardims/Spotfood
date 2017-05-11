@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,7 +21,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
@@ -101,8 +97,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (DataSnapshot postData : dataSnapshot.getChildren()) {
                     SpotfoodLocation location = postData.getValue(SpotfoodLocation.class);
                     local.add(location);
-                    LatLng position = new LatLng(Double.parseDouble(location.getLat()), Double.parseDouble(location.getLon()));
-                    Marker place = mMap.addMarker(new MarkerOptions().position(position).title(location.getName()).draggable(true));
+                    LatLng position = new LatLng(Double.parseDouble(location.getLat()),
+                            Double.parseDouble(location.getLon()));
+                    Marker place = mMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(location.getName())
+                            .draggable(true));
                     place.setTag(location);
                 }
             }
