@@ -91,11 +91,18 @@ public class PlaceInfos extends AppCompatActivity {
     }
 
     protected void updateDataInfos(SpotfoodLocation data){
+        Button checkInButton = (Button) findViewById(R.id.checkInButton);
+        checkInButton.setClickable(true);
+        Button addNewPhoto = (Button) findViewById(R.id.addNewPhoto);
+        addNewPhoto.setClickable(true);
+        ImageButton trashButton = (ImageButton) findViewById(R.id.trashButton);
+        trashButton.setClickable(true);
         TextView nameInfo = (TextView) findViewById(R.id.nameInfo);
         TextView typeInfo = (TextView) findViewById(R.id.typeInfo);
         final TextView statusInfo = (TextView) findViewById(R.id.statusInfo);
         TextView rateInfo = (TextView) findViewById(R.id.rateInfo);
         Switch statusSwitch = (Switch) findViewById(R.id.statusInfoSwitch);
+        statusSwitch.setVisibility(1);
         ImageView imageInfo = (ImageView) findViewById(R.id.imageInfo);
         ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
         nameInfo.setText(data.getName());
@@ -259,6 +266,8 @@ public class PlaceInfos extends AppCompatActivity {
 
     public void gotoNextPhoto(View view) {
         ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
+        ImageButton nextPhoto = (ImageButton) findViewById(R.id.nextPhoto);
+        nextPhoto.setClickable(true);
         if(photoIndex < photos.size()-1){
             photoIndex++;
         } else {
@@ -267,12 +276,35 @@ public class PlaceInfos extends AppCompatActivity {
         Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
     }
 
+    public void gotoLastPhoto(View view) {
+        ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
+        ImageButton lastPhoto = (ImageButton) findViewById(R.id.lastPhoto);
+        lastPhoto.setClickable(true);
+        if(photoIndex > 0){
+            photoIndex--;
+        } else {
+            photoIndex = photos.size()-1;
+        }
+        Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
+    }
+
     public void ratePlaceAction(View view) {
         DialogFragment rf = new Rate();
         Bundle arg = new Bundle();
         arg.putString("id",id);
+        arg.putString("name",name);
         rf.setArguments(arg);
         rf.show(getFragmentManager(),"dialog");
+    }
+
+
+    public void editType(View view) {
+        DialogFragment ef = new EditType();
+        Bundle arg = new Bundle();
+        arg.putString("id",id);
+        arg.putString("name",name);
+        ef.setArguments(arg);
+        ef.show(getFragmentManager(),"dialog");
     }
 
     public void trashThis(View view) {

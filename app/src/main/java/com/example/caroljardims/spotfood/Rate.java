@@ -1,6 +1,7 @@
 package com.example.caroljardims.spotfood;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class Rate extends DialogFragment implements View.OnClickListener {
     private ImageButton star5;
     private SpotfoodLocation spotfood;
     private String id = "";
+    private String name = "";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference refDB = database.getReference("Locations").child("local");
     private Double currentRate;
@@ -37,6 +39,7 @@ public class Rate extends DialogFragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_rate,null);
 
         id = getArguments().getString("id");
+        name = getArguments().getString("name");
 
         rateButton = (Button) view.findViewById(R.id.sendRate);
         rateButton.setOnClickListener(this);
@@ -73,11 +76,12 @@ public class Rate extends DialogFragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.sendRate:
                 if(newRate == null) newRate = 0.0;
                 refDB.child(id).child("rate").setValue(String.valueOf(newRate));
-                getDialog().dismiss();
+
                 break;
             case R.id.star1:
                 cleanStars();
