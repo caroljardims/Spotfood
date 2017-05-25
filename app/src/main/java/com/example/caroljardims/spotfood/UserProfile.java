@@ -60,19 +60,20 @@ public class UserProfile extends AppCompatActivity {
                         checkInDatas.add(checkInData);
                     }
                     String count = String.valueOf(checkInDatas.size());
-                    countCheckIns.setText("Você já visitou "+count+" locais!");
-                    countCheckIns.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                    String visits = "Últimas visitas:\n";
-                    visitedPlaces.setText(checkInDatas.get(0).getName());
-                    int size = checkInDatas.size()-1;
-                    if(size >= 0) {
+                    if(checkInDatas.isEmpty()) {
+                        count = "0";
+                        visitedPlaces.setText("Você ainda não tem nenhum check-in :(");
+                    } else {
+                        String visits = "Últimas visitas:\n";
+                        int size = checkInDatas.size()-1;
                         for (int i = 0; i < size+1; i++) {
                             visits = visits + "• " + checkInDatas.get(size-i).getName() + "\n";
                         }
                         visitedPlaces.setText(visits);
-                    } else {
-                        visitedPlaces.setText("Você ainda não tem nenhum check-in :(");
                     }
+                    countCheckIns.setText("Você já visitou "+count+" locais!");
+                    countCheckIns.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
                 }
 
                 @Override
