@@ -13,4 +13,8 @@
     <color name="DeepOrange700">#e64a19</color>
     <color name="strongOrange">#ff4d00</color>
     <color name="Red800">#c62828</color>
+    <color name="transparent">#0000</color>
+    <color name="Teal400">#26A69A</color>
+    <color name="Teal900">#004d40</color>
+    <color name="Cyan900">#006064</color>
 </resources>

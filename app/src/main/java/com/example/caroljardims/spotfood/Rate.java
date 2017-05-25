@@ -45,14 +45,19 @@ public class Rate extends DialogFragment implements View.OnClickListener {
         rateButton.setOnClickListener(this);
         star1 = (ImageButton) view.findViewById(R.id.star1);
         star1.setOnClickListener(this);
+        star1.setClickable(false);
         star2 = (ImageButton) view.findViewById(R.id.star2);
         star2.setOnClickListener(this);
+        star2.setClickable(false);
         star3 = (ImageButton) view.findViewById(R.id.star3);
         star3.setOnClickListener(this);
+        star3.setClickable(false);
         star4 = (ImageButton) view.findViewById(R.id.star4);
         star4.setOnClickListener(this);
+        star4.setClickable(false);
         star5 = (ImageButton) view.findViewById(R.id.star5);
         star5.setOnClickListener(this);
+        star5.setClickable(false);
 
         refDB.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -62,6 +67,12 @@ public class Rate extends DialogFragment implements View.OnClickListener {
                     currentRate = Double.valueOf(spotfood.getRate());
                 else
                     currentRate = 0.0;
+
+                star1.setClickable(true);
+                star2.setClickable(true);
+                star3.setClickable(true);
+                star4.setClickable(true);
+                star5.setClickable(true);
             }
 
             @Override
@@ -81,7 +92,7 @@ public class Rate extends DialogFragment implements View.OnClickListener {
             case R.id.sendRate:
                 if(newRate == null) newRate = 0.0;
                 refDB.child(id).child("rate").setValue(String.valueOf(newRate));
-
+                this.dismiss();
                 break;
             case R.id.star1:
                 cleanStars();

@@ -43,43 +43,55 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         userName = (TextView) findViewById(R.id.userName);
-        userName.setText("Olá, "+profile.getFirstName()+" :)");
-
-        Uri uri = profile.getProfilePictureUri(70,70);
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
-        Picasso.with(this).load(uri).into(profilePicture);
 
         countCheckIns = (TextView) findViewById(R.id.countCheckIns);
         visitedPlaces = (TextView) findViewById(R.id.visitedPlaces);
-        refUser.child(profile.getId()).child("checkedIn").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    CheckInData checkInData = data.getValue(CheckInData.class);
-                    checkInDatas.add(checkInData);
-                }
-                String count = String.valueOf(checkInDatas.size());
-                countCheckIns.setText("Você já visitou "+count+" locais!");
-                countCheckIns.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                String visits = "Últimas visitas:\n";
-                int size = checkInDatas.size()-1;
-                for(int i = 0; i < 3; i++){
-                    visits = visits + "• " + checkInDatas.get(size-i).getName() + "\n";
-                }
-                visitedPlaces.setText(visits);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        if(profile!=null){
+            userName.setText("Olá, "+profile.getFirstName()+" :)");
+            Uri uri = profile.getProfilePictureUri(70,70);
+            Picasso.with(this).load(uri).into(profilePicture);
+            refUser.child(profile.getId()).child("checkedIn").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        CheckInData checkInData = data.getValue(CheckInData.class);
+                        checkInDatas.add(checkInData);
+                    }
+                    String count = String.valueOf(checkInDatas.size());
+                    countCheckIns.setText("Você já visitou "+count+" locais!");
+                    countCheckIns.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                    String visits = "Últimas visitas:\n";
+                    visitedPlaces.setText(checkInDatas.get(0).getName());
+                    int size = checkInDatas.size()-1;
+                    if(size >= 0) {
+                        for (int i = 0; i < size+1; i++) {
+                            visits = visits + "• " + checkInDatas.get(size-i).getName() + "\n";
+                        }
+                        visitedPlaces.setText(visits);
+                    } else {
+                        visitedPlaces.setText("Você ainda não tem nenhum check-in :(");
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+        }
     }
 
     public void logout(View view) {
-        LoginManager.getInstance().logOut();
-        Intent main = new Intent(this, MainActivity.class);
-        startActivity(main);
+        if(profile!=null) {
+            LoginManager.getInstance().logOut();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+        }
     }
 
     void sendToast(String message){

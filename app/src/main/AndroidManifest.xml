@@ -73,7 +73,6 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".GetPermissions" />
         <activity android:name=".NewPlace" />
-        <activity android:name=".PlaceInfoActivity" />
         <activity android:name=".PlaceInfos" />
         <activity android:name=".UserProfile"></activity>
     </application>

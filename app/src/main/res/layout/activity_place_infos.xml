@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/foodtruck"
+            app:srcCompat="@drawable/food_truck"
             android:background="@color/gray900"/>
 
 
@@ -45,7 +45,8 @@
             android:layout_gravity="right"
             android:scaleType="centerCrop"
             android:visibility="invisible"
-            android:src="@drawable/camera" />
+            android:src="@drawable/camera"
+            android:background="@color/transparent"/>
 
 
         <TextView
@@ -124,8 +125,12 @@
                     android:paddingLeft="15dp" />
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/transparent"
+                    android:src="@drawable/edit"
+                    android:layout_marginLeft="10dp"
                     android:onClick="editType" />
 
             </LinearLayout>
@@ -155,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerInside"
+                android:src="@drawable/food_truck_2"
                 android:background="@color/gray400"
                 />
 
@@ -164,6 +170,9 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:onClick="gotoLastPhoto"
+                    android:background="@color/transparent"
+                    android:src="@drawable/last_photo"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="-150dp"
                     android:clickable="false"
                     android:textAllCaps="false"
@@ -174,9 +183,12 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
+                    android:scaleType="centerCrop"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="-40dp"
                     android:clickable="false"
+                    android:background="@color/transparent"
+                    android:src="@drawable/next_photo"
                     android:onClick="gotoNextPhoto"
                     android:textAllCaps="false" />
 
@@ -208,7 +220,8 @@
                 android:onClick="trashThis"
                 android:id="@+id/trashButton"
                 android:clickable="false"
-                android:src="@drawable/background"/>
+                android:background="@color/transparent"
+                android:src="@drawable/trash"/>
     </LinearLayout>
     </ScrollView>
 

@@ -268,24 +268,28 @@ public class PlaceInfos extends AppCompatActivity {
         ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
         ImageButton nextPhoto = (ImageButton) findViewById(R.id.nextPhoto);
         nextPhoto.setClickable(true);
-        if(photoIndex < photos.size()-1){
-            photoIndex++;
-        } else {
-            photoIndex = 0;
+        if (!photos.isEmpty()) {
+            if (photoIndex < photos.size() - 1) {
+                photoIndex++;
+            } else {
+                photoIndex = 0;
+            }
+            Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
         }
-        Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
     }
 
     public void gotoLastPhoto(View view) {
         ImageView placePhotos = (ImageView) findViewById(R.id.placePhotos);
         ImageButton lastPhoto = (ImageButton) findViewById(R.id.lastPhoto);
         lastPhoto.setClickable(true);
-        if(photoIndex > 0){
-            photoIndex--;
-        } else {
-            photoIndex = photos.size()-1;
+        if(!photos.isEmpty()) {
+            if (photoIndex > 0) {
+                photoIndex--;
+            } else {
+                photoIndex = photos.size() - 1;
+            }
+            Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
         }
-        Picasso.with(this).load(photos.get(photoIndex).getUrl()).into(placePhotos);
     }
 
     public void ratePlaceAction(View view) {

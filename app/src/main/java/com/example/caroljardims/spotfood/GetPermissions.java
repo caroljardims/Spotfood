@@ -64,23 +64,13 @@ public class GetPermissions extends AppCompatActivity {
                                 ref.child("name").setValue(object.getString("name"));
                                 ref.child("email").setValue(object.getString("email"));
                                 ref.child("gender").setValue(object.getString("gender"));
-                                ref.child("birthday").setValue(object.getString("birthday"));
                                 ref.child("link").setValue(object.getString("link"));
                             } catch (JSONException e) {
-                                sendToast("no1");
-                            }
-
-                            try{
-                                ref.child("location").setValue(object.getString("location"));
-                                ref.child("education").setValue(object.getString("education"));
-                                ref.child("work").setValue(object.getString("work"));
-                            }catch (JSONException e){
-                                sendToast("no2");
                             }
                         }
                     });
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,link,gender,location,birthday,education,work,email");
+            parameters.putString("fields","id,name,link,gender,email");
             request.setParameters(parameters);
             request.executeAsync();
         }
